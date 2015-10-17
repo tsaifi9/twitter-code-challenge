@@ -13,7 +13,10 @@ module WebServices
 
     def get_tweets_from(user: , count: 25)
       @client.user_timeline(user, {count: count}).map{|t| {time: format_time(t.created_at), text: t.text} }
-    rescue ::Twitter::Error::NotFound
+    rescue ::Twitter::Error::NotFound, ::Twitter::Error::Unauthorized
+      []
+    rescue ::Twitter::Error => e
+      Rails.logger.error e.class.to_s
       []
     end
 

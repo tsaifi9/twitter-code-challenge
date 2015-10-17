@@ -31,14 +31,39 @@ describe WebServices::Twitter do
       end
     end
 
-    context "when the user does not exists" do
+    describe "error conditions" do
+      let(:error) { ::Twitter::Error::NotFound }
+
       before do
-       allow(twitter_api_double).to receive(:user_timeline).with("user", { count: 2 })
-        .and_raise(::Twitter::Error::NotFound)
+         allow(twitter_api_double).to receive(:user_timeline).with("user", { count: 2 })
+          .and_raise(error)
       end
 
-      it "should not returns any tweets" do
-        expect(method_to_call).to eq([])
+      context "when the user does not exists" do
+        it "should not returns any tweets" do
+          expect(method_to_call).to eq([])
+        end
+      end
+
+      context "when the user is a protected account" do
+        let(:error) { ::Twitter::Error::Unauthorized }
+
+        it "should not returns any tweets" do
+          expect(method_to_call).to eq([])
+        end
+      end
+
+      context "when we receive an unknown error" do
+        let(:error) { ::Twitter::Error::Forbidden }
+
+        it "logs the error" do
+          expect(Rails.logger).to receive(:error).with("Twitter::Error::Forbidden")
+          method_to_call
+        end
+
+        it "should not returns any tweets" do
+          expect(method_to_call).to eq([])
+        end
       end
     end
   end
