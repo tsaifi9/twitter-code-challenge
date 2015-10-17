@@ -1,15 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe HomeController, type: :controller do
+describe HomeController, type: :controller do
   let(:user) { create(:user) }
 
   describe "GET index" do
     context "when the user is signed in" do
       before { sign_in user }
 
-      it "routes them to home_controller#index" do
+      it "routes them to the react component" do
         get :index
-        expect(response).to render_template(:index)
+        expect(response).to_not render_template(:index)
+        expect(response).to be_success
       end
     end
 
@@ -24,14 +25,10 @@ RSpec.describe HomeController, type: :controller do
   describe "GET get_tweet_from_user" do
     context "when user is signed in" do
       let(:twitter_user) { "some_twitter_user" }
-      let(:twitter_double) { double("tweets") }
 
       before do
         sign_in user
-        allow(WebServices::Twitter).to receive(:new).and_return(twitter_double)
-        allow(twitter_double).to receive(:get_tweets_from).with(user: twitter_user).and_return(
-          [{time: "10/31/2002 02:02AM", text: "first"}, {time: "01/02/2005 01:04PM", text: "second"}]
-        )
+        stub_twitter_user_search(user: twitter_user)
       end
 
       it "returns the tweets for that user" do

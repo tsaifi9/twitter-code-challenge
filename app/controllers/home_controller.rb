@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   before_action :authenticate_user!
   
   def index
+    render component: "UserLookup"
   end
 
   def get_tweet_from_user
