@@ -7,8 +7,9 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rails'
+require 'capybara/poltergeist'
 
-Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -46,6 +47,7 @@ RSpec.configure do |config|
   config.before :each do
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
+
     config.include TwitterStubber
   end
 
