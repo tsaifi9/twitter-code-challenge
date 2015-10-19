@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'twitter'
 gem 'devise'
 gem 'react-rails', '~> 1.3.0'
+gem 'bootstrap-sass', '~> 3.3.5'
 
 group :development, :test do
   gem 'byebug'
