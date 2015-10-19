@@ -32,9 +32,12 @@ var UserSearchBar = React.createClass({
 
   render: function() {  
     return (
-      <form>
-        <input ref="user" id="user" type="text" placeholder="Search for Twitter User" />
-        <button onClick={this.lookupUser}>Search</button>
+      <form className="form-inline">
+        <div className="form-group">
+          <input ref="user" id="user" type="text" placeholder="Search for Twitter User" className="form-control"/>
+        </div>
+
+        <button onClick={this.lookupUser} className="btn btn-default">Search</button>
       </form>
     )
   }
@@ -57,9 +60,9 @@ var Tweet = React.createClass({
     return (
       <div className="tweet">
         {this.props.text}
-        <br />
-        {this.props.time}
         <br /><br />
+        <span className="time">Tweeted at {this.props.time}</span>
+        <br />
       </div>
     )
   }

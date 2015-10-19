@@ -1,3 +1,19 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.form-inline {
+  .form-group {
+    padding-right: 5px;
+  }
+}
+
+#tweets {
+  .tweet {
+    margin: 10px 0px;
+    color: #ECF0F1;
+    background-color: #16A085;
+    padding: 10px 20px;
+
+    .time {
+      font-style: italic;
+      color: #BDC3C7; 
+    }
+  }
+}
